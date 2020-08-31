@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  <meta name="google-site-verification" content="true" />
+  
+  
+  <title>继承_super_this_abstract | pigDong</title>
+  <meta name="description" content="知识点 三大特性之继承 super关键字 this关键字 abstract方法与abstract类  1. 继承1.1 概述​        多个类中存在相同属性和行为时，将这些内容抽取到单独一个类中，那么多个类无需再定义这些属性和行为，只要继承那一个类即可。  ​        其中，多个类可以称为子类，单独那一个类称为父类、超类（superclass）或者基类。​        继承描述的是事">
+<meta property="og:type" content="article">
+<meta property="og:title" content="继承_super_this_abstract">
+<meta property="og:url" content="https://mrchen229.github.io/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/index.html">
+<meta property="og:site_name" content="pigDong">
+<meta property="og:description" content="知识点 三大特性之继承 super关键字 this关键字 abstract方法与abstract类  1. 继承1.1 概述​        多个类中存在相同属性和行为时，将这些内容抽取到单独一个类中，那么多个类无需再定义这些属性和行为，只要继承那一个类即可。  ​        其中，多个类可以称为子类，单独那一个类称为父类、超类（superclass）或者基类。​        继承描述的是事">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mrchen229.github.io/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/01-%E7%BB%A7%E6%89%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.png">
+<meta property="og:image" content="https://mrchen229.github.io/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/03-super%E4%B8%8Ethis%E7%9A%84%E5%86%85%E5%AD%98%E5%9B%BE.png">
+<meta property="og:image" content="https://mrchen229.github.io/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/image-20200827090502331.png">
+<meta property="og:image" content="https://mrchen229.github.io/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/04-Java继承的三个特点.png">
+<meta property="article:published_time" content="2020-08-27T01:34:08.000Z">
+<meta property="article:modified_time" content="2020-08-27T01:35:17.250Z">
+<meta property="article:author" content="pigDong">
+<meta property="article:tag" content="三大特性之继承">
+<meta property="article:tag" content="super关键字">
+<meta property="article:tag" content="this关键字">
+<meta property="article:tag" content="abstract方法与abstract类">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mrchen229.github.io/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/01-%E7%BB%A7%E6%89%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://mrchen229.github.io/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="pigDong" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://mrchen229.github.io/" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">pigDong</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java &amp; CV</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shandong, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://mrchen229.github.io/" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>仅note用的Blog<br/>交流欢迎加Q:2294414385</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B8%B8%E7%94%A8API/">常用API</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/">继承与多态</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9B%86%E5%90%88/">集合</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%B0%81%E8%A3%85/">面向对象和封装</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ArrayList/" rel="tag">ArrayList</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ArrayList%E7%B1%BB/" rel="tag">ArrayList类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arrays%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95/" rel="tag">Arrays类的方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Calendar%E7%B1%BB-%E6%96%B9%E4%BE%BF%E8%8E%B7%E5%8F%96%E5%90%84%E4%B8%AA%E6%97%B6%E9%97%B4%E5%B1%9E%E6%80%A7/" rel="tag">Calendar类(方便获取各个时间属性)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collections%E5%B7%A5%E5%85%B7%E7%B1%BB/" rel="tag">Collections工具类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection%E9%9B%86%E5%90%88/" rel="tag">Collection集合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Comparable%E4%B8%8EComparator/" rel="tag">Comparable与Comparator</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DateFormat%E7%B1%BB-Date%E4%B8%8EString%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" rel="tag">DateFormat类(Date与String之间的转换)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Date%E7%B1%BB/" rel="tag">Date类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashSet/" rel="tag">HashSet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA%E4%BD%BF%E7%94%A8/" rel="tag">IDEA使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iterator%E8%BF%AD%E4%BB%A3%E5%99%A8/" rel="tag">Iterator迭代器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaBean/" rel="tag">JavaBean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B/" rel="tag">Java开发过程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LinkedList/" rel="tag">LinkedList</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math%E7%B1%BB/" rel="tag">Math类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Objects%E7%B1%BB/" rel="tag">Objects类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object%E7%B1%BB-toString-equals/" rel="tag">Object类(toString_equals)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Random%E7%B1%BB/" rel="tag">Random类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scanner%E7%B1%BB/" rel="tag">Scanner类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/StringBuilder%E7%B1%BB/" rel="tag">StringBuilder类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/String%E7%B1%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" rel="tag">String类的常用方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/System%E7%B1%BB/" rel="tag">System类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/abstract%E6%96%B9%E6%B3%95%E4%B8%8Eabstract%E7%B1%BB/" rel="tag">abstract方法与abstract类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/final%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">final关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/instanceof/" rel="tag">instanceof</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static%E5%8F%98%E9%87%8F-static%E6%96%B9%E6%B3%95-static%E4%BB%A3%E7%A0%81%E5%9D%97/" rel="tag">static变量_static方法_static代码块</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/super%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">super关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/this%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">this关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%86%85%E5%AD%98%E5%9B%BE/" rel="tag">一维数组内存图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%B4%A2%E5%BC%95/" rel="tag">一维数组定义与索引</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E7%BB%A7%E6%89%BF/" rel="tag">三大特性之继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5/" rel="tag">判断语句</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8C%85%E8%A3%85%E7%B1%BB%E4%B8%8E%E8%87%AA%E5%8A%A8%E6%8B%86%E8%A3%85%E7%AE%B1/" rel="tag">包装类与自动拆装箱</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB/" rel="tag">匿名内部类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/" rel="tag">可变参数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" rel="tag">基本类型与字符串之间的转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A2%9E%E5%BC%BAfor/" rel="tag">增强for</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%8A%E4%B8%8B%E8%BD%AC%E5%9E%8B/" rel="tag">多态的上下转型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E5%89%8D%E6%8F%90/" rel="tag">多态的前提</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E8%B1%A1%E5%86%85%E5%AD%98%E5%9B%BE/" rel="tag">对象内存图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%81%E8%A3%85private/" rel="tag">封装private</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E9%87%8F%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="tag">常量与数据类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%94%A8%E6%B3%95-class-interface/" rel="tag">引用类型用法(class interface)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/" rel="tag">循环语句</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB/" rel="tag">成员内部类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E5%A4%9A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%BB%86%E8%8A%82/" rel="tag">接口多实现方法细节</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E6%88%90%E5%91%98%E7%9A%84%E5%AE%9A%E4%B9%89/" rel="tag">接口成员的定义</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%99%90%E5%88%B6/" rel="tag">接口的限制</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">数据类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E4%B8%8E%E8%BF%94%E5%9B%9E%E5%80%BC/" rel="tag">数组作为方法参数与返回值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/" rel="tag">数组常见操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/" rel="tag">方法定义</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/" rel="tag">方法重载与执行</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/" rel="tag">权限修饰符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E9%80%A0/" rel="tag">构造</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88-%E9%98%9F%E5%88%97-%E6%95%B0%E7%BB%84-%E9%93%BE%E8%A1%A8-%E7%BA%A2%E9%BB%91%E6%A0%91/" rel="tag">栈_队列_数组_链表_红黑树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%9B%E5%9E%8B%E7%B1%BB-%E6%96%B9%E6%B3%95-%E6%8E%A5%E5%8F%A3/" rel="tag">泛型类_方法_接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6/" rel="tag">泛型通配符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" rel="tag">类与对象</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%90%E7%AE%97%E7%AC%A6%E7%BB%86%E8%8A%82/" rel="tag">运算符细节</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" rel="tag">进制转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E8%AF%AD%E5%8F%A5/" rel="tag">选择语句</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/ArrayList/" style="font-size: 13px;">ArrayList</a> <a href="/tags/ArrayList%E7%B1%BB/" style="font-size: 13px;">ArrayList类</a> <a href="/tags/Arrays%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95/" style="font-size: 13px;">Arrays类的方法</a> <a href="/tags/Calendar%E7%B1%BB-%E6%96%B9%E4%BE%BF%E8%8E%B7%E5%8F%96%E5%90%84%E4%B8%AA%E6%97%B6%E9%97%B4%E5%B1%9E%E6%80%A7/" style="font-size: 13px;">Calendar类(方便获取各个时间属性)</a> <a href="/tags/Collections%E5%B7%A5%E5%85%B7%E7%B1%BB/" style="font-size: 13px;">Collections工具类</a> <a href="/tags/Collection%E9%9B%86%E5%90%88/" style="font-size: 13px;">Collection集合</a> <a href="/tags/Comparable%E4%B8%8EComparator/" style="font-size: 13px;">Comparable与Comparator</a> <a href="/tags/DateFormat%E7%B1%BB-Date%E4%B8%8EString%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">DateFormat类(Date与String之间的转换)</a> <a href="/tags/Date%E7%B1%BB/" style="font-size: 13px;">Date类</a> <a href="/tags/HashSet/" style="font-size: 13px;">HashSet</a> <a href="/tags/IDEA%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">IDEA使用</a> <a href="/tags/Iterator%E8%BF%AD%E4%BB%A3%E5%99%A8/" style="font-size: 13px;">Iterator迭代器</a> <a href="/tags/JavaBean/" style="font-size: 13px;">JavaBean</a> <a href="/tags/Java%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B/" style="font-size: 13px;">Java开发过程</a> <a href="/tags/LinkedList/" style="font-size: 13px;">LinkedList</a> <a href="/tags/Math%E7%B1%BB/" style="font-size: 13px;">Math类</a> <a href="/tags/Objects%E7%B1%BB/" style="font-size: 13px;">Objects类</a> <a href="/tags/Object%E7%B1%BB-toString-equals/" style="font-size: 13px;">Object类(toString_equals)</a> <a href="/tags/Random%E7%B1%BB/" style="font-size: 13px;">Random类</a> <a href="/tags/Scanner%E7%B1%BB/" style="font-size: 13px;">Scanner类</a> <a href="/tags/StringBuilder%E7%B1%BB/" style="font-size: 13px;">StringBuilder类</a> <a href="/tags/String%E7%B1%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" style="font-size: 13px;">String类的常用方法</a> <a href="/tags/System%E7%B1%BB/" style="font-size: 13px;">System类</a> <a href="/tags/abstract%E6%96%B9%E6%B3%95%E4%B8%8Eabstract%E7%B1%BB/" style="font-size: 13px;">abstract方法与abstract类</a> <a href="/tags/final%E5%85%B3%E9%94%AE%E5%AD%97/" style="font-size: 13px;">final关键字</a> <a href="/tags/instanceof/" style="font-size: 13px;">instanceof</a> <a href="/tags/static%E5%8F%98%E9%87%8F-static%E6%96%B9%E6%B3%95-static%E4%BB%A3%E7%A0%81%E5%9D%97/" style="font-size: 13px;">static变量_static方法_static代码块</a> <a href="/tags/super%E5%85%B3%E9%94%AE%E5%AD%97/" style="font-size: 13px;">super关键字</a> <a href="/tags/this/" style="font-size: 13px;">this</a> <a href="/tags/this%E5%85%B3%E9%94%AE%E5%AD%97/" style="font-size: 13px;">this关键字</a> <a href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%86%85%E5%AD%98%E5%9B%BE/" style="font-size: 13px;">一维数组内存图</a> <a href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%B4%A2%E5%BC%95/" style="font-size: 13px;">一维数组定义与索引</a> <a href="/tags/%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E7%BB%A7%E6%89%BF/" style="font-size: 13px;">三大特性之继承</a> <a href="/tags/%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5/" style="font-size: 13px;">判断语句</a> <a href="/tags/%E5%8C%85%E8%A3%85%E7%B1%BB%E4%B8%8E%E8%87%AA%E5%8A%A8%E6%8B%86%E8%A3%85%E7%AE%B1/" style="font-size: 13px;">包装类与自动拆装箱</a> <a href="/tags/%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB/" style="font-size: 13px;">匿名内部类</a> <a href="/tags/%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/" style="font-size: 13px;">可变参数</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">基本类型与字符串之间的转换</a> <a href="/tags/%E5%A2%9E%E5%BC%BAfor/" style="font-size: 13px;">增强for</a> <a href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%8A%E4%B8%8B%E8%BD%AC%E5%9E%8B/" style="font-size: 13px;">多态的上下转型</a> <a href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E5%89%8D%E6%8F%90/" style="font-size: 13px;">多态的前提</a> <a href="/tags/%E5%AF%B9%E8%B1%A1%E5%86%85%E5%AD%98%E5%9B%BE/" style="font-size: 13px;">对象内存图</a> <a href="/tags/%E5%B0%81%E8%A3%85private/" style="font-size: 13px;">封装private</a> <a href="/tags/%E5%B8%B8%E9%87%8F%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" style="font-size: 13px;">常量与数据类型</a> <a href="/tags/%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%94%A8%E6%B3%95-class-interface/" style="font-size: 13px;">引用类型用法(class interface)</a> <a href="/tags/%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/" style="font-size: 13px;">循环语句</a> <a href="/tags/%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB/" style="font-size: 13px;">成员内部类</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%A4%9A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%BB%86%E8%8A%82/" style="font-size: 13px;">接口多实现方法细节</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E6%88%90%E5%91%98%E7%9A%84%E5%AE%9A%E4%B9%89/" style="font-size: 13px;">接口成员的定义</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%99%90%E5%88%B6/" style="font-size: 13px;">接口的限制</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">数据类型转换</a> <a href="/tags/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E4%B8%8E%E8%BF%94%E5%9B%9E%E5%80%BC/" style="font-size: 13px;">数组作为方法参数与返回值</a> <a href="/tags/%E6%95%B0%E7%BB%84%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/" style="font-size: 13px;">数组常见操作</a> <a href="/tags/%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/" style="font-size: 13px;">方法定义</a> <a href="/tags/%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/" style="font-size: 13px;">方法重载与执行</a> <a href="/tags/%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/" style="font-size: 13px;">权限修饰符</a> <a href="/tags/%E6%9E%84%E9%80%A0/" style="font-size: 13px;">构造</a> <a href="/tags/%E6%A0%88-%E9%98%9F%E5%88%97-%E6%95%B0%E7%BB%84-%E9%93%BE%E8%A1%A8-%E7%BA%A2%E9%BB%91%E6%A0%91/" style="font-size: 13px;">栈_队列_数组_链表_红黑树</a> <a href="/tags/%E6%B3%9B%E5%9E%8B%E7%B1%BB-%E6%96%B9%E6%B3%95-%E6%8E%A5%E5%8F%A3/" style="font-size: 13px;">泛型类_方法_接口</a> <a href="/tags/%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6/" style="font-size: 13px;">泛型通配符</a> <a href="/tags/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" style="font-size: 13px;">类与对象</a> <a href="/tags/%E8%BF%90%E7%AE%97%E7%AC%A6%E7%BB%86%E8%8A%82/" style="font-size: 13px;">运算符细节</a> <a href="/tags/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">进制转换</a> <a href="/tags/%E9%80%89%E6%8B%A9%E8%AF%AD%E5%8F%A5/" style="font-size: 13px;">选择语句</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">13</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E9%9B%86%E5%90%88/">集合</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/05.%E9%9B%86%E5%90%88/%E6%A0%88_%E9%98%9F%E5%88%97_%E6%95%B0%E7%BB%84_%E9%93%BE%E8%A1%A8_%E7%BA%A2%E9%BB%91%E6%A0%91_ArrayList_LinkedList_HashSet_LinkedHashSet_%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0_Collections%E5%B7%A5%E5%85%B7_Comparable_Comparator/" class="title">栈_队列_数组_链表_红黑树_ArrayList_LinkedList_HashSet_LinkedHashSet_可变参数_Collections工具_Comparable_Comparator</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T11:58:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E9%9B%86%E5%90%88/">集合</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/05.%E9%9B%86%E5%90%88/Collection_Iterator(%E5%A2%9E%E5%BC%BAfor)_%E6%B3%9B%E5%9E%8B(%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6)/" class="title">Collection_Iterator(增强for)_泛型(泛型通配符)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T06:51:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B8%B8%E7%94%A8API/">常用API</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/03.%E5%B8%B8%E7%94%A8API/Object_Objects_Date_DateFormat_Calendar_System_StringBuilder_%E5%8C%85%E8%A3%85%E7%B1%BB%E4%B8%8E%E6%8B%86%E8%A3%85%E7%AE%B1_%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%8EString%E8%BD%AC%E6%8D%A2/" class="title">Object_Objects_Date_DateFormat_Calendar_System_StringBuilder_包装类与拆装箱_基本类型与String转换</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T05:20:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/">继承与多态</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/final_%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6_%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB_%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB_%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%94%A8%E6%B3%95(class_interface)/" class="title">final_权限修饰符_成员内部类_匿名内部类_引用类型用法(class_interface)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T01:40:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/">继承与多态</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E6%8E%A5%E5%8F%A3%E6%88%90%E5%91%98_%E6%8E%A5%E5%8F%A3%E5%A4%9A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%BB%86%E8%8A%82_%E5%A4%9A%E6%80%81%E5%89%8D%E6%8F%90%E4%B8%8E%E4%B8%8A%E4%B8%8B%E8%BD%AC%E5%9E%8B_instanceof/" class="title">接口成员_接口多实现方法细节_多态前提与上下转型_instanceof</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-27T02:32:08.000Z" itemprop="datePublished">2020-08-27</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">知识点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E7%BB%A7%E6%89%BF"><span class="toc-text">1. 继承</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E6%A6%82%E8%BF%B0"><span class="toc-text">1.1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E7%BB%A7%E6%89%BF%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-text">1.2 继承的格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E7%BB%A7%E6%89%BF%E5%90%8E%E7%9A%84%E7%89%B9%E7%82%B9%E2%80%94%E2%80%94%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F"><span class="toc-text">1.3 继承后的特点——成员变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E4%B8%8D%E9%87%8D%E5%90%8D"><span class="toc-text">成员变量不重名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E9%87%8D%E5%90%8D"><span class="toc-text">成员变量重名</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-%E7%BB%A7%E6%89%BF%E5%90%8E%E7%9A%84%E7%89%B9%E7%82%B9%E2%80%94%E2%80%94%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95"><span class="toc-text">1.4 继承后的特点——成员方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95%E4%B8%8D%E9%87%8D%E5%90%8D"><span class="toc-text">成员方法不重名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95%E9%87%8D%E5%90%8D%E2%80%94%E2%80%94%E9%87%8D%E5%86%99-Override"><span class="toc-text">成员方法重名——重写(Override)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%86%99%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">重写的注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-%E7%BB%A7%E6%89%BF%E5%90%8E%E7%9A%84%E7%89%B9%E7%82%B9%E2%80%94%E2%80%94%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-text">1.5 继承后的特点——构造方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-super%E5%92%8Cthis"><span class="toc-text">1.6 super和this</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%88%B6%E7%B1%BB%E7%A9%BA%E9%97%B4%E4%BC%98%E5%85%88%E4%BA%8E%E5%AD%90%E7%B1%BB%E5%AF%B9%E8%B1%A1%E4%BA%A7%E7%94%9F"><span class="toc-text">父类空间优先于子类对象产生</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#super%E5%92%8Cthis%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-text">super和this的含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#super%E5%92%8Cthis%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-text">super和this的用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-7-%E7%BB%A7%E6%89%BF%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">1.7 继承的特点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="toc-text">2. 抽象类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E6%A6%82%E8%BF%B0"><span class="toc-text">2.1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-abstract%E4%BD%BF%E7%94%A8%E6%A0%BC%E5%BC%8F"><span class="toc-text">2.2 abstract使用格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95"><span class="toc-text">抽象方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="toc-text">抽象类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">抽象的使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">2.3 注意事项</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-04.继承与多态/继承_super_this_abstract" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      继承_super_this_abstract
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/" class="article-date">
+	  <time datetime="2020-08-27T01:34:08.000Z" itemprop="datePublished">2020-08-27</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/">继承与多态</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/abstract%E6%96%B9%E6%B3%95%E4%B8%8Eabstract%E7%B1%BB/" rel="tag">abstract方法与abstract类</a>, <a class="article-tag-link-link" href="/tags/super%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">super关键字</a>, <a class="article-tag-link-link" href="/tags/this%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">this关键字</a>, <a class="article-tag-link-link" href="/tags/%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E7%BB%A7%E6%89%BF/" rel="tag">三大特性之继承</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.5k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 9(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><ul>
+<li>三大特性之继承</li>
+<li>super关键字</li>
+<li>this关键字</li>
+<li>abstract方法与abstract类</li>
+</ul>
+<h1 id="1-继承"><a href="#1-继承" class="headerlink" title="1. 继承"></a>1. 继承</h1><h2 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h2><p>​        多个类中存在相同属性和行为时，将这些内容抽取到单独一个类中，那么多个类无需再定义这些属性和行为，只要继承那一个类即可。 </p>
+<p>​        其中，多个类可以称为子类，单独那一个类称为<strong>父类、超类（superclass）或者基类</strong>。<br>​        继承描述的是事物之间的所属关系，这种关系是： <code>is-a</code> 的关系。可见，父类更通用，子类更具体。我们通过继承，可以使多种事物之间形成一种关系体系。  </p>
+<ul>
+<li>继承：就是子类继承父类的属性和行为，使得子类对象具有与父类相同的属性、相同的行为。子类可以直接访问父类中的非私有的属性和行为。</li>
+<li>好处<ol>
+<li>提高代码的复用性。</li>
+<li>类与类之间产生了关系，是多态的前提。  </li>
+</ol>
+</li>
+</ul>
+<p><img src="/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/01-%E7%BB%A7%E6%89%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.png"></p>
+<h2 id="1-2-继承的格式"><a href="#1-2-继承的格式" class="headerlink" title="1.2 继承的格式"></a>1.2 继承的格式</h2><p>​        通过 <code>extends</code> 关键字，可以声明一个子类继承另外一个父类，定义格式如下：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 父类 </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125; </span><br><span class="line"><span class="class"><span class="keyword">class</span> 子类 <span class="keyword">extends</span> 父类 </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-继承后的特点——成员变量"><a href="#1-3-继承后的特点——成员变量" class="headerlink" title="1.3 继承后的特点——成员变量"></a>1.3 继承后的特点——成员变量</h2><p>​        当类之间产生了关系后，其中各类中的成员变量，又产生了哪些影响呢？</p>
+<h3 id="成员变量不重名"><a href="#成员变量不重名" class="headerlink" title="成员变量不重名"></a>成员变量不重名</h3><p>​        如果子类父类中出现<strong>不重名的成员变量</strong>，这时的访问是<strong>没有影响</strong>的。  </p>
+<h3 id="成员变量重名"><a href="#成员变量重名" class="headerlink" title="成员变量重名"></a>成员变量重名</h3><p>​        如果子类父类中出现<strong>重名</strong>的成员变量，这时的访问是<strong>有影响</strong>的。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Fu中的成员变量。</span></span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">5</span>;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">extends</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Zi中的成员变量</span></span><br><span class="line">    <span class="keyword">int</span> num = <span class="number">6</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 访问父类中的num</span></span><br><span class="line">        System.out.println(<span class="string">&quot;Fu num=&quot;</span> + num);</span><br><span class="line">        <span class="comment">// 访问子类中的num</span></span><br><span class="line">        System.out.println(<span class="string">&quot;Zi num=&quot;</span> + num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExtendsDemo03</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 创建子类对象</span></span><br><span class="line">        Zi z = <span class="keyword">new</span> Zi();</span><br><span class="line">        <span class="comment">// 调用子类中的show方法</span></span><br><span class="line">        z.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line">演示结果：</span><br><span class="line">    Fu num = <span class="number">6</span></span><br><span class="line">    Zi num = <span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>​        子父类中出现了同名的成员变量时，<strong>在子类中需要访问父类中非私有成员变量</strong>时，需要使用 <code>super</code> 关键字，修饰父类成员变量，类似于之前学过的 this 。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">super</span>.父类成员变量名</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Fu 类中的成员变量是非私有的，子类中可以直接访问。若Fu 类中的成员变量私有了，子类是不能直接访问的。</p>
+<p>通常编码时，我们遵循封装的原则，使用private修饰成员变量，那如何访问父类的私有成员变量呢？对！可以在父类中提供公共的getXxx方法和setXxx方法。  </p>
+</blockquote>
+<h2 id="1-4-继承后的特点——成员方法"><a href="#1-4-继承后的特点——成员方法" class="headerlink" title="1.4 继承后的特点——成员方法"></a>1.4 继承后的特点——成员方法</h2><p>当类之间产生了关系，其中各类中的成员方法，又产生了哪些影响呢？</p>
+<h3 id="成员方法不重名"><a href="#成员方法不重名" class="headerlink" title="成员方法不重名"></a>成员方法不重名</h3><p>​        如果子类父类中出现<strong>不重名</strong>的成员方法，这时的调用是没有影响的。对象调用方法时，会先在<strong>子类</strong>中查找有没有对应的方法，若子类中存在就会执行子类中的方法，若子类中不存在就会执行<strong>父类</strong>中相应的方法。  </p>
+<h3 id="成员方法重名——重写-Override"><a href="#成员方法重名——重写-Override" class="headerlink" title="成员方法重名——重写(Override)"></a>成员方法重名——重写(Override)</h3><p>​        如果子类父类中出现<strong>重名</strong>的成员方法，这时的访问是一种特殊情况，叫做<strong>方法重写</strong> (Override)。</p>
+<ul>
+<li>方法重写 ：子类中出现与父类<strong>一模一样的方法</strong>时（<strong>返回值类型，方法名和参数列表都相同</strong>），会出现覆盖效果，也称为重写或者复写。声明不变，重新实现。  </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Fu show&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">extends</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">    <span class="comment">//子类重写了父类的show方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Zi show&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExtendsDemo05</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Zi z = <span class="keyword">new</span> Zi();</span><br><span class="line">        <span class="comment">// 子类中有show方法，只执行重写后的show方法</span></span><br><span class="line">        z.show(); <span class="comment">// Zi show</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>子类可以根据需要，定义特定于自己的行为。既沿袭了父类的功能名称，又根据子类的需要重新实现父类方法，从而进行扩展增强。</p>
+<blockquote>
+<p>用到super.父类成员方法，表示调用父类的成员方法。  </p>
+</blockquote>
+<h3 id="重写的注意事项"><a href="#重写的注意事项" class="headerlink" title="重写的注意事项"></a>重写的注意事项</h3><ol>
+<li>子类方法覆盖父类<strong>方法</strong>，必须要保证<strong>权限大于等于父类权限</strong>。</li>
+<li>子类方法覆盖父类<strong>方法</strong>，<strong>返回值类型、函数名和参数列表都要一模一样</strong>。  </li>
+</ol>
+<h2 id="1-5-继承后的特点——构造方法"><a href="#1-5-继承后的特点——构造方法" class="headerlink" title="1.5 继承后的特点——构造方法"></a>1.5 继承后的特点——构造方法</h2><p>当类之间产生了关系，其中各类中的构造方法，又产生了哪些影响呢？</p>
+<p>首先我们要回忆两个事情，构造方法的定义格式和作用。</p>
+<ol>
+<li>构造方法的名字是与类名一致的。所以<strong>子类是无法继承父类构造方法</strong>的。</li>
+<li>构造方法的作用是初始化成员变量的。所以子类的初始化过程中，必须先执行父类的初始化动作。子<strong>类的构造方法中默认有一个 super() ，表示调用父类的构造方法</strong>，父类成员变量初始化后，才可以给子类使用。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> n;</span><br><span class="line">    Fu()&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Fu()&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zi</span> <span class="keyword">extends</span> <span class="title">Fu</span> </span>&#123;</span><br><span class="line">    Zi()&#123;</span><br><span class="line">        <span class="comment">// super（），调用父类构造方法</span></span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        System.out.println(<span class="string">&quot;Zi（）&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExtendsDemo07</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span> <span class="params">(String args[])</span></span>&#123;</span><br><span class="line">        Zi zi = <span class="keyword">new</span> Zi();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line">输出结果：</span><br><span class="line">    Fu（）</span><br><span class="line">    Zi（）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-6-super和this"><a href="#1-6-super和this" class="headerlink" title="1.6 super和this"></a>1.6 super和this</h2><p><img src="/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/03-super%E4%B8%8Ethis%E7%9A%84%E5%86%85%E5%AD%98%E5%9B%BE.png"></p>
+<h3 id="父类空间优先于子类对象产生"><a href="#父类空间优先于子类对象产生" class="headerlink" title="父类空间优先于子类对象产生"></a>父类空间优先于子类对象产生</h3><p>​        在每次<strong>创建子类对象</strong>时，<strong>先初始化父类空间，再创建其子类对象本身</strong>。目的在于子类对象中包含了其对应的父类空间，便可以包含其父类的成员，如果父类成员非private修饰，则子类可以随意使用父类成员。</p>
+<p>​        代码体现在子类的构造方法调用时，一定先调用父类的构造方法。</p>
+<img src="/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/image-20200827090502331.png" alt="image-20200827090502331" style="zoom:50%;">
+
+<h3 id="super和this的含义"><a href="#super和this的含义" class="headerlink" title="super和this的含义"></a>super和this的含义</h3><ul>
+<li><p>super ：代表父类的存储空间标识(可以理解为父亲的引用)。</p>
+</li>
+<li><p>this ：代表当前对象的引用(谁调用就代表谁)。</p>
+</li>
+</ul>
+<h3 id="super和this的用法"><a href="#super和this的用法" class="headerlink" title="super和this的用法"></a>super和this的用法</h3><ol>
+<li><p>访问成员</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.成员变量 ‐‐ 本类的</span><br><span class="line"><span class="keyword">super</span>.成员变量 ‐‐ 父类的</span><br><span class="line"><span class="keyword">this</span>.成员方法名() ‐‐ 本类的</span><br><span class="line"><span class="keyword">super</span>.成员方法名() ‐‐ 父类的</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问构造方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>(...) ‐‐ 本类的构造方法</span><br><span class="line"><span class="keyword">super</span>(...) ‐‐ 父类的构造方法</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>子类的每个构造方法中均有<strong>默认的super()**，调用</strong>父类的空参构造<strong>。手动调用父类构造会覆盖默认的super()。<br>**super() 和 this() 都必须是在构造方法的第一行，所以不能同时出现</strong>。  </p>
+</blockquote>
+</li>
+</ol>
+<h2 id="1-7-继承的特点"><a href="#1-7-继承的特点" class="headerlink" title="1.7 继承的特点"></a>1.7 继承的特点</h2><img src="/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/04-Java继承的三个特点.png" style="zoom:67%;">
+
+<ol>
+<li><p>Java只支持单继承，不支持多继承。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一个类只能有一个父类，不可以有多个父类。</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">extends</span> <span class="title">A</span></span>&#123;&#125; <span class="comment">//ok</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">extends</span> <span class="title">A</span>，<span class="title">B</span>... //<span class="title">error</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Java支持多层继承(继承体系)。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">extends</span> <span class="title">B</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>顶层父类是Object类。所有的类默认继承Object，作为父类。  </p>
+</blockquote>
+</li>
+<li><p>子类和父类是一种相对的概念。  </p>
+</li>
+</ol>
+<h1 id="2-抽象类"><a href="#2-抽象类" class="headerlink" title="2. 抽象类"></a>2. 抽象类</h1><h2 id="2-1-概述"><a href="#2-1-概述" class="headerlink" title="2.1 概述"></a>2.1 概述</h2><p>​        父类中的方法，被它的子类们重写，子类各自的实现都不尽相同。那么父类的方法声明和方法主体，只有声明还有意义，而方法主体则没有存在的意义了。我们<strong>把没有方法主体的方法称为抽象方法</strong>。Java语法规定，<strong>包含抽象方法的类就是抽象类</strong>。</p>
+<ul>
+<li>定义<ul>
+<li><strong>抽象方法</strong> ： 没有方法体的方法。</li>
+<li><strong>抽象类</strong>：包含抽象方法的类。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-2-abstract使用格式"><a href="#2-2-abstract使用格式" class="headerlink" title="2.2 abstract使用格式"></a>2.2 abstract使用格式</h2><h3 id="抽象方法"><a href="#抽象方法" class="headerlink" title="抽象方法"></a>抽象方法</h3><p>​        使用 <code>abstract</code> 关键字修饰方法，该方法就成了抽象方法，<strong>抽象方法只包含一个方法名，而没有方法体</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">修饰符 <span class="keyword">abstract</span> 返回值类型 方法名 (参数列表)；</span><br></pre></td></tr></table></figure>
+
+<h3 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h3><p>​        如果一个类<strong>包含抽象方法</strong>，那么该类必须是<strong>抽象类</strong>。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> 类名字 </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="抽象的使用"><a href="#抽象的使用" class="headerlink" title="抽象的使用"></a>抽象的使用</h3><p>​        <strong>继承抽象类的子类必须重写父类所有的抽象方法</strong>。<strong>否则，该子类也必须声明为抽象类。</strong>最终，必须有子类实现该父类的抽象方法，否则，从最初的父类到最终的子类都不能创建对象，失去意义。  </p>
+<blockquote>
+<p>子类对父类抽象方法的完成实现，我们将这种方法重写的操作，也叫做实现方法。  </p>
+</blockquote>
+<h2 id="2-3-注意事项"><a href="#2-3-注意事项" class="headerlink" title="2.3 注意事项"></a>2.3 注意事项</h2><p>关于抽象类的使用，以下为语法上要注意的细节，虽然条目较多，但若理解了抽象的本质，无需死记硬背。</p>
+<ol>
+<li><p>抽象类<strong>不能创建对象</strong>，如果创建，编译无法通过而报错。只能创建其非抽象子类的对象。</p>
+<blockquote>
+<p>理解：假设创建了抽象类的对象，调用抽象的方法，而抽象方法没有具体的方法体，没有意义。</p>
+</blockquote>
+</li>
+<li><p><strong>抽象类中，可以有构造方法</strong>，是供子类创建对象时，初始化父类成员使用的。</p>
+<blockquote>
+<p>理解：子类的构造方法中，有默认的super()，需要访问父类构造方法。</p>
+</blockquote>
+</li>
+<li><p><strong>抽象类中，不一定包含抽象方法</strong>，但是有抽象方法的类必定是抽象类。  </p>
+<blockquote>
+<p>理解：未包含抽象方法的抽象类，目的就是不想让调用者创建该类对象，通常用于某些特殊的类结构设计。  </p>
+</blockquote>
+</li>
+<li><p>抽象类的子类，必须重写抽象父类中所有的抽象方法，否则，编译无法通过而报错。除非该子类也是抽象<br>类。</p>
+<blockquote>
+<p>理解：假设不重写所有抽象方法，则类中可能包含抽象方法。那么创建对象后，调用抽象的方法，没有意义。  </p>
+</blockquote>
+</li>
+</ol>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://mrchen229.github.io/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/" title="继承_super_this_abstract" target="_blank" rel="external">https://mrchen229.github.io/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E7%BB%A7%E6%89%BF_super_this_abstract/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://mrchen229.github.io/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://mrchen229.github.io/" target="_blank"><span class="text-dark">pigDong</span><small class="ml-1x">Java &amp; CV</small></a></h3>
+        <div>Java &amp; CV 初学者。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E6%8E%A5%E5%8F%A3%E6%88%90%E5%91%98_%E6%8E%A5%E5%8F%A3%E5%A4%9A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%BB%86%E8%8A%82_%E5%A4%9A%E6%80%81%E5%89%8D%E6%8F%90%E4%B8%8E%E4%B8%8A%E4%B8%8B%E8%BD%AC%E5%9E%8B_instanceof/" title="接口成员_接口多实现方法细节_多态前提与上下转型_instanceof"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/08/26/03.%E5%B8%B8%E7%94%A8API/Scanner_Random_ArrayList_String%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95_Arrays_Math_static%E5%85%B3%E9%94%AE%E5%AD%97/" title="Scanner_Random_ArrayList_String常见方法_Arrays_Math_static关键字"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://mrchen229.github.io/" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	From <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/ygbhf/clicklove/clicklove.js"></script>
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>

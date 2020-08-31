@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  <meta name="google-site-verification" content="true" />
+  
+  
+  <title>数据类型转换_运算符_方法定义 | pigDong</title>
+  <meta name="description" content="知识点 数据类型间的自动转换与强制转换 算数、比较、逻辑、三元运算符( 注意+&#x3D; ) 方法定义  1.数据类型之间的转换​        Java程序中要求参与的计算的数据，必须要保证数据类型的一致性，如果数据类型不一致将发生类型的转换。 1.1 自动转换一个 int 类型变量和一个 byte 类型变量进行加法运算， 结果是什么数据类型？        运算结果，变量的类型将是 int 类型，这就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据类型转换_运算符_方法定义">
+<meta property="og:url" content="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/index.html">
+<meta property="og:site_name" content="pigDong">
+<meta property="og:description" content="知识点 数据类型间的自动转换与强制转换 算数、比较、逻辑、三元运算符( 注意+&#x3D; ) 方法定义  1.数据类型之间的转换​        Java程序中要求参与的计算的数据，必须要保证数据类型的一致性，如果数据类型不一致将发生类型的转换。 1.1 自动转换一个 int 类型变量和一个 byte 类型变量进行加法运算， 结果是什么数据类型？        运算结果，变量的类型将是 int 类型，这就">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/image-20200825154656288.png">
+<meta property="og:image" content="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/image-20200825155512475.png">
+<meta property="og:image" content="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/01-强制类型转换的数据溢出问题.png">
+<meta property="article:published_time" content="2020-08-26T01:17:08.000Z">
+<meta property="article:modified_time" content="2020-08-26T01:17:27.340Z">
+<meta property="article:author" content="pigDong">
+<meta property="article:tag" content="数据类型转换">
+<meta property="article:tag" content="运算符细节">
+<meta property="article:tag" content="方法定义">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/image-20200825154656288.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="pigDong" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://mrchen229.github.io/" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">pigDong</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java &amp; CV</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shandong, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://mrchen229.github.io/" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>仅note用的Blog<br/>交流欢迎加Q:2294414385</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B8%B8%E7%94%A8API/">常用API</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/">继承与多态</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9B%86%E5%90%88/">集合</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%B0%81%E8%A3%85/">面向对象和封装</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ArrayList/" rel="tag">ArrayList</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ArrayList%E7%B1%BB/" rel="tag">ArrayList类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arrays%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95/" rel="tag">Arrays类的方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Calendar%E7%B1%BB-%E6%96%B9%E4%BE%BF%E8%8E%B7%E5%8F%96%E5%90%84%E4%B8%AA%E6%97%B6%E9%97%B4%E5%B1%9E%E6%80%A7/" rel="tag">Calendar类(方便获取各个时间属性)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collections%E5%B7%A5%E5%85%B7%E7%B1%BB/" rel="tag">Collections工具类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection%E9%9B%86%E5%90%88/" rel="tag">Collection集合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Comparable%E4%B8%8EComparator/" rel="tag">Comparable与Comparator</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DateFormat%E7%B1%BB-Date%E4%B8%8EString%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" rel="tag">DateFormat类(Date与String之间的转换)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Date%E7%B1%BB/" rel="tag">Date类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashSet/" rel="tag">HashSet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA%E4%BD%BF%E7%94%A8/" rel="tag">IDEA使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iterator%E8%BF%AD%E4%BB%A3%E5%99%A8/" rel="tag">Iterator迭代器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaBean/" rel="tag">JavaBean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B/" rel="tag">Java开发过程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LinkedList/" rel="tag">LinkedList</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math%E7%B1%BB/" rel="tag">Math类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Objects%E7%B1%BB/" rel="tag">Objects类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object%E7%B1%BB-toString-equals/" rel="tag">Object类(toString_equals)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Random%E7%B1%BB/" rel="tag">Random类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scanner%E7%B1%BB/" rel="tag">Scanner类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/StringBuilder%E7%B1%BB/" rel="tag">StringBuilder类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/String%E7%B1%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" rel="tag">String类的常用方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/System%E7%B1%BB/" rel="tag">System类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/abstract%E6%96%B9%E6%B3%95%E4%B8%8Eabstract%E7%B1%BB/" rel="tag">abstract方法与abstract类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/final%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">final关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/instanceof/" rel="tag">instanceof</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static%E5%8F%98%E9%87%8F-static%E6%96%B9%E6%B3%95-static%E4%BB%A3%E7%A0%81%E5%9D%97/" rel="tag">static变量_static方法_static代码块</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/super%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">super关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/this%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">this关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%86%85%E5%AD%98%E5%9B%BE/" rel="tag">一维数组内存图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%B4%A2%E5%BC%95/" rel="tag">一维数组定义与索引</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E7%BB%A7%E6%89%BF/" rel="tag">三大特性之继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5/" rel="tag">判断语句</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8C%85%E8%A3%85%E7%B1%BB%E4%B8%8E%E8%87%AA%E5%8A%A8%E6%8B%86%E8%A3%85%E7%AE%B1/" rel="tag">包装类与自动拆装箱</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB/" rel="tag">匿名内部类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/" rel="tag">可变参数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" rel="tag">基本类型与字符串之间的转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A2%9E%E5%BC%BAfor/" rel="tag">增强for</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%8A%E4%B8%8B%E8%BD%AC%E5%9E%8B/" rel="tag">多态的上下转型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E5%89%8D%E6%8F%90/" rel="tag">多态的前提</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E8%B1%A1%E5%86%85%E5%AD%98%E5%9B%BE/" rel="tag">对象内存图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%81%E8%A3%85private/" rel="tag">封装private</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E9%87%8F%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="tag">常量与数据类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%94%A8%E6%B3%95-class-interface/" rel="tag">引用类型用法(class interface)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/" rel="tag">循环语句</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB/" rel="tag">成员内部类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E5%A4%9A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%BB%86%E8%8A%82/" rel="tag">接口多实现方法细节</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E6%88%90%E5%91%98%E7%9A%84%E5%AE%9A%E4%B9%89/" rel="tag">接口成员的定义</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%99%90%E5%88%B6/" rel="tag">接口的限制</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">数据类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E4%B8%8E%E8%BF%94%E5%9B%9E%E5%80%BC/" rel="tag">数组作为方法参数与返回值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/" rel="tag">数组常见操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/" rel="tag">方法定义</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/" rel="tag">方法重载与执行</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/" rel="tag">权限修饰符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E9%80%A0/" rel="tag">构造</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88-%E9%98%9F%E5%88%97-%E6%95%B0%E7%BB%84-%E9%93%BE%E8%A1%A8-%E7%BA%A2%E9%BB%91%E6%A0%91/" rel="tag">栈_队列_数组_链表_红黑树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%9B%E5%9E%8B%E7%B1%BB-%E6%96%B9%E6%B3%95-%E6%8E%A5%E5%8F%A3/" rel="tag">泛型类_方法_接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6/" rel="tag">泛型通配符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" rel="tag">类与对象</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%90%E7%AE%97%E7%AC%A6%E7%BB%86%E8%8A%82/" rel="tag">运算符细节</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" rel="tag">进制转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E8%AF%AD%E5%8F%A5/" rel="tag">选择语句</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/ArrayList/" style="font-size: 13px;">ArrayList</a> <a href="/tags/ArrayList%E7%B1%BB/" style="font-size: 13px;">ArrayList类</a> <a href="/tags/Arrays%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95/" style="font-size: 13px;">Arrays类的方法</a> <a href="/tags/Calendar%E7%B1%BB-%E6%96%B9%E4%BE%BF%E8%8E%B7%E5%8F%96%E5%90%84%E4%B8%AA%E6%97%B6%E9%97%B4%E5%B1%9E%E6%80%A7/" style="font-size: 13px;">Calendar类(方便获取各个时间属性)</a> <a href="/tags/Collections%E5%B7%A5%E5%85%B7%E7%B1%BB/" style="font-size: 13px;">Collections工具类</a> <a href="/tags/Collection%E9%9B%86%E5%90%88/" style="font-size: 13px;">Collection集合</a> <a href="/tags/Comparable%E4%B8%8EComparator/" style="font-size: 13px;">Comparable与Comparator</a> <a href="/tags/DateFormat%E7%B1%BB-Date%E4%B8%8EString%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">DateFormat类(Date与String之间的转换)</a> <a href="/tags/Date%E7%B1%BB/" style="font-size: 13px;">Date类</a> <a href="/tags/HashSet/" style="font-size: 13px;">HashSet</a> <a href="/tags/IDEA%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">IDEA使用</a> <a href="/tags/Iterator%E8%BF%AD%E4%BB%A3%E5%99%A8/" style="font-size: 13px;">Iterator迭代器</a> <a href="/tags/JavaBean/" style="font-size: 13px;">JavaBean</a> <a href="/tags/Java%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B/" style="font-size: 13px;">Java开发过程</a> <a href="/tags/LinkedList/" style="font-size: 13px;">LinkedList</a> <a href="/tags/Math%E7%B1%BB/" style="font-size: 13px;">Math类</a> <a href="/tags/Objects%E7%B1%BB/" style="font-size: 13px;">Objects类</a> <a href="/tags/Object%E7%B1%BB-toString-equals/" style="font-size: 13px;">Object类(toString_equals)</a> <a href="/tags/Random%E7%B1%BB/" style="font-size: 13px;">Random类</a> <a href="/tags/Scanner%E7%B1%BB/" style="font-size: 13px;">Scanner类</a> <a href="/tags/StringBuilder%E7%B1%BB/" style="font-size: 13px;">StringBuilder类</a> <a href="/tags/String%E7%B1%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" style="font-size: 13px;">String类的常用方法</a> <a href="/tags/System%E7%B1%BB/" style="font-size: 13px;">System类</a> <a href="/tags/abstract%E6%96%B9%E6%B3%95%E4%B8%8Eabstract%E7%B1%BB/" style="font-size: 13px;">abstract方法与abstract类</a> <a href="/tags/final%E5%85%B3%E9%94%AE%E5%AD%97/" style="font-size: 13px;">final关键字</a> <a href="/tags/instanceof/" style="font-size: 13px;">instanceof</a> <a href="/tags/static%E5%8F%98%E9%87%8F-static%E6%96%B9%E6%B3%95-static%E4%BB%A3%E7%A0%81%E5%9D%97/" style="font-size: 13px;">static变量_static方法_static代码块</a> <a href="/tags/super%E5%85%B3%E9%94%AE%E5%AD%97/" style="font-size: 13px;">super关键字</a> <a href="/tags/this/" style="font-size: 13px;">this</a> <a href="/tags/this%E5%85%B3%E9%94%AE%E5%AD%97/" style="font-size: 13px;">this关键字</a> <a href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%86%85%E5%AD%98%E5%9B%BE/" style="font-size: 13px;">一维数组内存图</a> <a href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%B4%A2%E5%BC%95/" style="font-size: 13px;">一维数组定义与索引</a> <a href="/tags/%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E7%BB%A7%E6%89%BF/" style="font-size: 13px;">三大特性之继承</a> <a href="/tags/%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5/" style="font-size: 13px;">判断语句</a> <a href="/tags/%E5%8C%85%E8%A3%85%E7%B1%BB%E4%B8%8E%E8%87%AA%E5%8A%A8%E6%8B%86%E8%A3%85%E7%AE%B1/" style="font-size: 13px;">包装类与自动拆装箱</a> <a href="/tags/%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB/" style="font-size: 13px;">匿名内部类</a> <a href="/tags/%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/" style="font-size: 13px;">可变参数</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">基本类型与字符串之间的转换</a> <a href="/tags/%E5%A2%9E%E5%BC%BAfor/" style="font-size: 13px;">增强for</a> <a href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%8A%E4%B8%8B%E8%BD%AC%E5%9E%8B/" style="font-size: 13px;">多态的上下转型</a> <a href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E5%89%8D%E6%8F%90/" style="font-size: 13px;">多态的前提</a> <a href="/tags/%E5%AF%B9%E8%B1%A1%E5%86%85%E5%AD%98%E5%9B%BE/" style="font-size: 13px;">对象内存图</a> <a href="/tags/%E5%B0%81%E8%A3%85private/" style="font-size: 13px;">封装private</a> <a href="/tags/%E5%B8%B8%E9%87%8F%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" style="font-size: 13px;">常量与数据类型</a> <a href="/tags/%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%94%A8%E6%B3%95-class-interface/" style="font-size: 13px;">引用类型用法(class interface)</a> <a href="/tags/%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/" style="font-size: 13px;">循环语句</a> <a href="/tags/%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB/" style="font-size: 13px;">成员内部类</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%A4%9A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%BB%86%E8%8A%82/" style="font-size: 13px;">接口多实现方法细节</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E6%88%90%E5%91%98%E7%9A%84%E5%AE%9A%E4%B9%89/" style="font-size: 13px;">接口成员的定义</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%99%90%E5%88%B6/" style="font-size: 13px;">接口的限制</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">数据类型转换</a> <a href="/tags/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E4%B8%8E%E8%BF%94%E5%9B%9E%E5%80%BC/" style="font-size: 13px;">数组作为方法参数与返回值</a> <a href="/tags/%E6%95%B0%E7%BB%84%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/" style="font-size: 13px;">数组常见操作</a> <a href="/tags/%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/" style="font-size: 13px;">方法定义</a> <a href="/tags/%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/" style="font-size: 13px;">方法重载与执行</a> <a href="/tags/%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/" style="font-size: 13px;">权限修饰符</a> <a href="/tags/%E6%9E%84%E9%80%A0/" style="font-size: 13px;">构造</a> <a href="/tags/%E6%A0%88-%E9%98%9F%E5%88%97-%E6%95%B0%E7%BB%84-%E9%93%BE%E8%A1%A8-%E7%BA%A2%E9%BB%91%E6%A0%91/" style="font-size: 13px;">栈_队列_数组_链表_红黑树</a> <a href="/tags/%E6%B3%9B%E5%9E%8B%E7%B1%BB-%E6%96%B9%E6%B3%95-%E6%8E%A5%E5%8F%A3/" style="font-size: 13px;">泛型类_方法_接口</a> <a href="/tags/%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6/" style="font-size: 13px;">泛型通配符</a> <a href="/tags/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" style="font-size: 13px;">类与对象</a> <a href="/tags/%E8%BF%90%E7%AE%97%E7%AC%A6%E7%BB%86%E8%8A%82/" style="font-size: 13px;">运算符细节</a> <a href="/tags/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">进制转换</a> <a href="/tags/%E9%80%89%E6%8B%A9%E8%AF%AD%E5%8F%A5/" style="font-size: 13px;">选择语句</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">13</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E9%9B%86%E5%90%88/">集合</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/05.%E9%9B%86%E5%90%88/%E6%A0%88_%E9%98%9F%E5%88%97_%E6%95%B0%E7%BB%84_%E9%93%BE%E8%A1%A8_%E7%BA%A2%E9%BB%91%E6%A0%91_ArrayList_LinkedList_HashSet_LinkedHashSet_%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0_Collections%E5%B7%A5%E5%85%B7_Comparable_Comparator/" class="title">栈_队列_数组_链表_红黑树_ArrayList_LinkedList_HashSet_LinkedHashSet_可变参数_Collections工具_Comparable_Comparator</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T11:58:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E9%9B%86%E5%90%88/">集合</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/05.%E9%9B%86%E5%90%88/Collection_Iterator(%E5%A2%9E%E5%BC%BAfor)_%E6%B3%9B%E5%9E%8B(%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6)/" class="title">Collection_Iterator(增强for)_泛型(泛型通配符)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T06:51:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B8%B8%E7%94%A8API/">常用API</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/03.%E5%B8%B8%E7%94%A8API/Object_Objects_Date_DateFormat_Calendar_System_StringBuilder_%E5%8C%85%E8%A3%85%E7%B1%BB%E4%B8%8E%E6%8B%86%E8%A3%85%E7%AE%B1_%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%8EString%E8%BD%AC%E6%8D%A2/" class="title">Object_Objects_Date_DateFormat_Calendar_System_StringBuilder_包装类与拆装箱_基本类型与String转换</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T05:20:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/">继承与多态</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/final_%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6_%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB_%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB_%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%94%A8%E6%B3%95(class_interface)/" class="title">final_权限修饰符_成员内部类_匿名内部类_引用类型用法(class_interface)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T01:40:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/">继承与多态</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E6%8E%A5%E5%8F%A3%E6%88%90%E5%91%98_%E6%8E%A5%E5%8F%A3%E5%A4%9A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%BB%86%E8%8A%82_%E5%A4%9A%E6%80%81%E5%89%8D%E6%8F%90%E4%B8%8E%E4%B8%8A%E4%B8%8B%E8%BD%AC%E5%9E%8B_instanceof/" class="title">接口成员_接口多实现方法细节_多态前提与上下转型_instanceof</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-27T02:32:08.000Z" itemprop="datePublished">2020-08-27</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">知识点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-text">1.数据类型之间的转换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E8%87%AA%E5%8A%A8%E8%BD%AC%E6%8D%A2"><span class="toc-text">1.1 自动转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E5%8E%9F%E7%90%86%E5%9B%BE%E8%A7%A3"><span class="toc-text">转换原理图解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E8%A7%84%E5%88%99"><span class="toc-text">转换规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2"><span class="toc-text">1.2 强制转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E5%8E%9F%E7%90%86%E5%9B%BE%E8%A7%A3-1"><span class="toc-text">转换原理图解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-text">注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-ASCII%E7%BC%96%E7%A0%81%E8%A1%A8"><span class="toc-text">1.3 ASCII编码表</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">2. 运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E7%AE%97%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">2.1 算数运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">2.2 赋值运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">2.3 比较运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">2.4 逻辑运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-%E4%B8%89%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">2.5 三元运算符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%96%B9%E6%B3%95%E5%85%A5%E9%97%A8"><span class="toc-text">3. 方法入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E6%A6%82%E8%BF%B0"><span class="toc-text">3.1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E6%96%B9%E6%B3%95%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">3.2 方法的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">3.3 注意事项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">4. 扩展知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7"><span class="toc-text">+&#x3D;符号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F%E5%92%8C%E5%8F%98%E9%87%8F%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-text">常量和变量的运算</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-01.Java基础语法/数据类型转换_运算符_方法定义" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      数据类型转换_运算符_方法定义
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/" class="article-date">
+	  <time datetime="2020-08-26T01:17:08.000Z" itemprop="datePublished">2020-08-26</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">数据类型转换</a>, <a class="article-tag-link-link" href="/tags/%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/" rel="tag">方法定义</a>, <a class="article-tag-link-link" href="/tags/%E8%BF%90%E7%AE%97%E7%AC%A6%E7%BB%86%E8%8A%82/" rel="tag">运算符细节</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.4k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 9(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><ul>
+<li>数据类型间的自动转换与强制转换</li>
+<li>算数、比较、逻辑、三元运算符( 注意+= )</li>
+<li>方法定义</li>
+</ul>
+<h1 id="1-数据类型之间的转换"><a href="#1-数据类型之间的转换" class="headerlink" title="1.数据类型之间的转换"></a>1.数据类型之间的转换</h1><p>​        Java程序中要求参与的计算的数据，必须要保证数据类型的一致性，如果数据类型不一致将发生类型的转换。</p>
+<h2 id="1-1-自动转换"><a href="#1-1-自动转换" class="headerlink" title="1.1 自动转换"></a>1.1 自动转换</h2><p>一个 int 类型变量和一个 byte 类型变量进行加法运算， 结果是什么数据类型？<br>        运算结果，变量的类型将是 int 类型，这就是出现了数据类型的自动类型转换现象。</p>
+<p><strong>自动转换</strong>：将取值范围小的类型自动提升为取值范围大的类型 。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">byte</span> b = <span class="number">2</span>; <span class="comment">// 一个byte是8位，范围-128-127</span></span><br><span class="line"><span class="comment">// byte x = b + i; // 报错</span></span><br><span class="line"><span class="comment">// int类型和byte类型运算，结果是int类型</span></span><br><span class="line"><span class="keyword">int</span> j = b + i;</span><br></pre></td></tr></table></figure>
+
+<h3 id="转换原理图解"><a href="#转换原理图解" class="headerlink" title="转换原理图解"></a>转换原理图解</h3><p>​        byte 类型内存占有1个字节，在和 int 类型运算时会提升为 int 类型 ，自动补充3个字节，因此计算后的结果还是 int 类型。  </p>
+<img src="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/image-20200825154656288.png" alt="image-20200825154656288" style="zoom: 50%;">
+
+<p>同样道理，当一个 int 类型变量和一个 double 变量运算时， int 类型将会自动提升为 double 类型进行运算。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">double</span> d = <span class="number">2.5</span>;</span><br><span class="line"><span class="comment">//int类型和double类型运算，结果是double类型</span></span><br><span class="line"><span class="comment">//int类型会提升为double类型</span></span><br><span class="line"><span class="keyword">double</span> e = d+i;</span><br></pre></td></tr></table></figure>
+
+<h3 id="转换规则"><a href="#转换规则" class="headerlink" title="转换规则"></a>转换规则</h3><p>​        范围小的类型向范围大的类型提升， byte、short、char 运算时直接提升为 int 。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>、<span class="keyword">short</span>、<span class="keyword">char</span>‐‐&gt;<span class="keyword">int</span>‐‐&gt;<span class="keyword">long</span>‐‐&gt;<span class="keyword">float</span>‐‐&gt;<span class="keyword">double</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-强制转换"><a href="#1-2-强制转换" class="headerlink" title="1.2 强制转换"></a>1.2 强制转换</h2><p>​        将 1.5 赋值到 int 类型变量会发生什么？产生编译失败，肯定无法赋值。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1.5</span>; <span class="comment">// 错误</span></span><br></pre></td></tr></table></figure>
+
+<p>​        double 类型内存8个字节， int 类型内存4个字节。 1.5 是 double 类型，取值范围大于 int 。可以理解为 double 是8升的水壶， int 是4升的水壶，不能把大水壶中的水直接放进小水壶去。</p>
+<p>​        想要赋值成功，只有通过强制类型转换，将 double 类型强制转换成 int 类型才能赋值。</p>
+<ul>
+<li>强制类型转换：将 取值范围大的类型 强制转换成 取值范围小的类型 。</li>
+</ul>
+<p>比较而言，自动转换是Java自动执行的，而强制转换需要我们自己手动执行。</p>
+<p>​        转换格式：  <code> 数据类型 变量名 = （数据类型）被转数据值; </code></p>
+<p>​        </p>
+<p>将 1.5 赋值到 int 类型，代码修改为：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// double类型数据强制转成int类型，直接去掉小数点。</span></span><br><span class="line"><span class="keyword">int</span> i = (<span class="keyword">int</span>)<span class="number">1.5</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​        同样道理，当一个 short 类型与 1 相加，若想将结果赋值给short类型变量，就需要强制转换。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//short类型变量，内存中2个字节</span></span><br><span class="line"><span class="keyword">short</span> s = <span class="number">1</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    出现编译失败</span></span><br><span class="line"><span class="comment">    s和1做运算的时候，1是int类型，s会被提升为int类型</span></span><br><span class="line"><span class="comment">    s+1后的结果是int类型，将结果在赋值会short类型时发生错误</span></span><br><span class="line"><span class="comment">    short内存2个字节，int类型4个字节</span></span><br><span class="line"><span class="comment">    必须将int强制转成short才能完成赋值</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">s = s + <span class="number">1</span>；<span class="comment">//编译失败</span></span><br><span class="line">s = (<span class="keyword">short</span>)(s+<span class="number">1</span>);<span class="comment">//编译成功</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="转换原理图解-1"><a href="#转换原理图解-1" class="headerlink" title="转换原理图解"></a>转换原理图解</h3><img src="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/image-20200825155512475.png" alt="image-20200825155512475" style="zoom: 50%;">
+
+<img src="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/01-强制类型转换的数据溢出问题.png" style="zoom:50%;">
+
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><ul>
+<li>浮点转成整数，直接取消小数点，可能造成数据损失精度。</li>
+<li>int 强制转成 short 砍掉2个字节，可能造成数据丢失  </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义s为short范围内最大值</span></span><br><span class="line"><span class="keyword">short</span> s = <span class="number">32767</span>;</span><br><span class="line"><span class="comment">// 运算后，强制转换，砍掉2个字节后会出现不确定的结果</span></span><br><span class="line">s = (<span class="keyword">short</span>)(s + <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-ASCII编码表"><a href="#1-3-ASCII编码表" class="headerlink" title="1.3 ASCII编码表"></a>1.3 ASCII编码表</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//字符类型变量</span></span><br><span class="line">    <span class="keyword">char</span> c = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//字符类型和int类型计算</span></span><br><span class="line">    System.out.println(c+i);<span class="comment">//输出结果是98</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在计算机的内部都是二进制的0、1数据，如何让计算机可以直接识别人类文字的问题呢？就产生出了编码表的概念。<br>        编码表 ：就是将人类的文字和一个十进制数进行对应起来组成一张表格。  见ASCII表</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>48</td>
+</tr>
+<tr>
+<td>9</td>
+<td>57</td>
+</tr>
+<tr>
+<td>A</td>
+<td>65</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>90</td>
+</tr>
+<tr>
+<td>a</td>
+<td>97</td>
+</tr>
+<tr>
+<td>z</td>
+<td>122</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>在char类型和int类型计算的过程中，char类型的字符先查询编码表，得到97，再和1求和，结果为98。char类型提升为int类型。char类型内存2个字节，int类型内存4个字节。  </p>
+</blockquote>
+<h1 id="2-运算符"><a href="#2-运算符" class="headerlink" title="2. 运算符"></a>2. 运算符</h1><h2 id="2-1-算数运算符"><a href="#2-1-算数运算符" class="headerlink" title="2.1 算数运算符"></a>2.1 算数运算符</h2><table>
+<thead>
+<tr>
+<th>算数运算符包括：</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>加法运算，字符串连接运算</td>
+</tr>
+<tr>
+<td>-</td>
+<td>减法运算</td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘法运算</td>
+</tr>
+<tr>
+<td>/</td>
+<td>除法运算</td>
+</tr>
+<tr>
+<td>%</td>
+<td>取模运算，两个数字相除取余数</td>
+</tr>
+<tr>
+<td>++ 、 –</td>
+<td>自增自减运算</td>
+</tr>
+</tbody></table>
+<p>Java中，整数使用以上运算符，无论怎么计算，也不会得到小数。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1234</span>;</span><br><span class="line">System.out.println(i/<span class="number">1000</span>*<span class="number">1000</span>);<span class="comment">//计算结果是1000</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>++</code> 运算，变量自己增长1。反之， <code>--</code> 运算，变量自己减少1，用法与 <code>++</code> 一致。</p>
+<ul>
+<li><p>独立运算：</p>
+<ul>
+<li>变量在独立运算时， 前++ 和 后++ 没有区别 。</li>
+</ul>
+</li>
+<li><p>混合运算：</p>
+<ul>
+<li><p>和其他变量放在一起， 前++ 和 后++ 就产生了不同。</p>
+</li>
+<li><p>变量++ ：</p>
+<p>即 <code>a=1;  b=a++; </code> 得到a为 2，b为1。</p>
+</li>
+<li><p>++变量 : </p>
+<p>即 <code>a=1;  b=++a; </code> 得到a为 2，b为2。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>+ 符号在字符串中的操作：</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ 符号在遇到字符串的时候，表示连接、拼接的含义。</span><br><span class="line">    <span class="string">&quot;a&quot;</span>+<span class="string">&quot;b&quot;</span>的结果是“ab”，连接含义</span><br><span class="line">    System.out.println(<span class="string">&quot;5+5=&quot;</span>+<span class="number">5</span>+<span class="number">5</span>);<span class="comment">//输出5+5=55</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-赋值运算符"><a href="#2-2-赋值运算符" class="headerlink" title="2.2 赋值运算符"></a>2.2 赋值运算符</h2><table>
+<thead>
+<tr>
+<th>赋值运算符包括：</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>=</td>
+<td>等于号</td>
+</tr>
+<tr>
+<td>+=</td>
+<td>加等于</td>
+</tr>
+<tr>
+<td>-=</td>
+<td>减等于</td>
+</tr>
+<tr>
+<td>*=</td>
+<td>乘等于</td>
+</tr>
+<tr>
+<td>/=</td>
+<td>除等于</td>
+</tr>
+<tr>
+<td>%=</td>
+<td>取模等</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eg : </span><br><span class="line">    i+=<span class="number">5</span>;<span class="comment">//计算方式 i=i+5 变量i先加5，再赋值变量i</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-比较运算符"><a href="#2-3-比较运算符" class="headerlink" title="2.3 比较运算符"></a>2.3 比较运算符</h2><table>
+<thead>
+<tr>
+<th>比较运算符包括：</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>==</td>
+<td>比较符号两边数据是否相等，相等结果是true。</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>比较符号左边的数据是否小于右边的数据，如果小于结果是true。</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>比较符号左边的数据是否大于右边的数据，如果大于结果是true。</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>比较符号左边的数据是否小于或者等于右边的数据，如果小于结果是true。</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>比较符号左边的数据是否大于或者等于右边的数据，如果小于结果是true。</td>
+</tr>
+<tr>
+<td>！=</td>
+<td>不等于符号 ，如果符号两边的数据不相等，结果是true。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>比较运算符，是两个数据之间进行比较的运算，运算结果都是布尔值 true 或者 false 。  </p>
+</blockquote>
+<h2 id="2-4-逻辑运算符"><a href="#2-4-逻辑运算符" class="headerlink" title="2.4 逻辑运算符"></a>2.4 逻辑运算符</h2><table>
+<thead>
+<tr>
+<th>逻辑运算符包括：</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;&amp; 短路与</td>
+<td>1. 两边都是true，结果是true<br>2. 一边是false，结果是false <br><strong>短路特点</strong>：符号左边是false，右边不再运算</td>
+</tr>
+<tr>
+<td>|| 短路或</td>
+<td>1. 两边都是false，结果是false <br>2. 一边是true，结果是true <br><strong>短路特点</strong>： 符号左边是true，右边不再运算</td>
+</tr>
+<tr>
+<td>！ 取反</td>
+<td>1. ! true 结果是false <br>2. ! false结果是true</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>逻辑运算符，是用来连接两个布尔类型结果的运算符，运算结果都是布尔值 true 或者 false  </p>
+</blockquote>
+<h2 id="2-5-三元运算符"><a href="#2-5-三元运算符" class="headerlink" title="2.5 三元运算符"></a>2.5 三元运算符</h2><ul>
+<li><p>三元运算符格式：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数据类型 变量名 = 布尔类型表达式？结果<span class="number">1</span>：结果<span class="number">2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>三元运算符计算方式：<br>布尔类型表达式结果是true，三元运算符整体结果为结果1，赋值给变量。<br>布尔类型表达式结果是false，三元运算符整体结果为结果2，赋值给变量。  </p>
+</li>
+</ul>
+<h1 id="3-方法入门"><a href="#3-方法入门" class="headerlink" title="3. 方法入门"></a>3. 方法入门</h1><h2 id="3-1-概述"><a href="#3-1-概述" class="headerlink" title="3.1 概述"></a>3.1 概述</h2><ul>
+<li>方法：就是将一个功能抽取出来，把代码单独定义在一个大括号内，形成一个单独的功能。<br>当我们需要这个功能的时候，就可以去调用。这样即实现了代码的复用性，也解决了代码冗余的现象。</li>
+</ul>
+<h2 id="3-2-方法的定义"><a href="#3-2-方法的定义" class="headerlink" title="3.2 方法的定义"></a>3.2 方法的定义</h2><p>定义格式：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">修饰符 返回值类型 方法名 （参数列表）｛</span><br><span class="line">    代码...</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">｝</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>定义格式解释：<ul>
+<li>修饰符： 目前固定写法 public static 。  </li>
+<li>返回值类型： 目前固定写法 void ，其他返回值类型在后面的课程讲解。</li>
+<li>方法名：为我们定义的方法起名，满足标识符的规范，用来调用方法。</li>
+<li>参数列表： 目前无参数， 带有参数的方法在后面的课程讲解。</li>
+<li>return：方法结束。因为返回值类型是void，方法大括号内的return可以不写。 </li>
+</ul>
+</li>
+</ul>
+<h2 id="3-3-注意事项"><a href="#3-3-注意事项" class="headerlink" title="3.3 注意事项"></a>3.3 注意事项</h2><ul>
+<li>方法定义注意事项：<ul>
+<li>方法必须定义在一类中方法外</li>
+<li>方法不能定义在另一个方法的里面  </li>
+</ul>
+</li>
+</ul>
+<h1 id="4-扩展知识点"><a href="#4-扩展知识点" class="headerlink" title="4. 扩展知识点"></a>4. 扩展知识点</h1><h2 id="符号"><a href="#符号" class="headerlink" title="+=符号"></a>+=符号</h2> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> s = <span class="number">1</span>;</span><br><span class="line">    s+=<span class="number">1</span>;</span><br><span class="line">    System.out.println(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        分析： s += 1 逻辑上看作是 s = s + 1 计算结果被提升为int类型，再向short类型赋值时发生错误，因为不能将取值范围大的类型赋值到取值范围小的类型。但是， s=s+1进行两次运算 ， += 是一个运算符，只运算一次，<strong>并带有强制转换的特点</strong>。</p>
+<p>​        也就是说<strong>s += 1 就是 s = (short)(s + 1)</strong> ，因此程序没有问题编译通过，运行结果是2  </p>
+<h2 id="常量和变量的运算"><a href="#常量和变量的运算" class="headerlink" title="常量和变量的运算"></a>常量和变量的运算</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">byte</span> b1=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">byte</span> b2=<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">byte</span> b3=<span class="number">1</span> + <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">byte</span> b4=b1 + b2;</span><br><span class="line">    System.out.println(b3);</span><br><span class="line">    System.out.println(b4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 分析： b3 = 1 + 2 ， 1 和 2 是常量，为固定不变的数据，在编译的时候（编译器javac），已经确定了 1+2 的结果并没有超过byte类型的取值范围，可以赋值给变量 b3 ，因此<strong>b3=1 + 2 是正确的</strong>。</p>
+<p>​        反之， b4 = b2 + b3 ， b2 和 b3 是变量，变量的值是可能变化的，在编译的时候，编译器javac不确定b2+b3的结果是什<br>么，因此会将结果以int类型进行处理，所以int类型不能赋值给byte类型，因此编译失败。  </p>
+</blockquote>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/" title="数据类型转换_运算符_方法定义" target="_blank" rel="external">https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2_%E8%BF%90%E7%AE%97%E7%AC%A6_%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://mrchen229.github.io/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://mrchen229.github.io/" target="_blank"><span class="text-dark">pigDong</span><small class="ml-1x">Java &amp; CV</small></a></h3>
+        <div>Java &amp; CV 初学者。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%88%A4%E6%96%AD_%E9%80%89%E6%8B%A9_%E5%BE%AA%E7%8E%AF/" title="判断_选择_循环"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/08/25/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E8%BF%9B%E5%88%B6-Java%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F-%E5%B8%B8%E9%87%8F-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="进制_Java执行顺序_常量_数据类型"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://mrchen229.github.io/" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	From <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/ygbhf/clicklove/clicklove.js"></script>
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>

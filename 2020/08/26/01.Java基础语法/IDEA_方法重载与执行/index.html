@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  <meta name="google-site-verification" content="true" />
+  
+  
+  <title>IDEA使用_方法重载与执行 | pigDong</title>
+  <meta name="description" content="知识点 IDEA使用 定义方法与方法重载  1. IDEA  回顾一下开发Java程序的步骤：  编写代码 启动cmd 调用javac编译 调用java运行  集成开发环境，是一种专门用来提高Java开发效率的软件。 ​    免费的IDE当中：Eclipse​    收费的IDE当中：IntelliJ IDEA免费+收费所有的IDE当中：全世界用得最多的就是IntelliJ IDEA  IDEA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IDEA使用_方法重载与执行">
+<meta property="og:url" content="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/index.html">
+<meta property="og:site_name" content="pigDong">
+<meta property="og:description" content="知识点 IDEA使用 定义方法与方法重载  1. IDEA  回顾一下开发Java程序的步骤：  编写代码 启动cmd 调用javac编译 调用java运行  集成开发环境，是一种专门用来提高Java开发效率的软件。 ​    免费的IDE当中：Eclipse​    收费的IDE当中：IntelliJ IDEA免费+收费所有的IDE当中：全世界用得最多的就是IntelliJ IDEA  IDEA">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/02-IDEA的项目结构.png">
+<meta property="og:image" content="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/image-20200826103253441.png">
+<meta property="og:image" content="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/03-%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%A7%A3.png">
+<meta property="og:image" content="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/04-方法返回值的有无.png">
+<meta property="article:published_time" content="2020-08-26T02:50:08.000Z">
+<meta property="article:modified_time" content="2020-08-26T02:51:49.755Z">
+<meta property="article:author" content="pigDong">
+<meta property="article:tag" content="IDEA使用">
+<meta property="article:tag" content="方法重载与执行">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/02-IDEA的项目结构.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="pigDong" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://mrchen229.github.io/" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">pigDong</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Java &amp; CV</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shandong, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://mrchen229.github.io/" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>仅note用的Blog<br/>交流欢迎加Q:2294414385</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B8%B8%E7%94%A8API/">常用API</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/">继承与多态</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9B%86%E5%90%88/">集合</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%B0%81%E8%A3%85/">面向对象和封装</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ArrayList/" rel="tag">ArrayList</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ArrayList%E7%B1%BB/" rel="tag">ArrayList类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arrays%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95/" rel="tag">Arrays类的方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Calendar%E7%B1%BB-%E6%96%B9%E4%BE%BF%E8%8E%B7%E5%8F%96%E5%90%84%E4%B8%AA%E6%97%B6%E9%97%B4%E5%B1%9E%E6%80%A7/" rel="tag">Calendar类(方便获取各个时间属性)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collections%E5%B7%A5%E5%85%B7%E7%B1%BB/" rel="tag">Collections工具类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection%E9%9B%86%E5%90%88/" rel="tag">Collection集合</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Comparable%E4%B8%8EComparator/" rel="tag">Comparable与Comparator</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DateFormat%E7%B1%BB-Date%E4%B8%8EString%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" rel="tag">DateFormat类(Date与String之间的转换)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Date%E7%B1%BB/" rel="tag">Date类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HashSet/" rel="tag">HashSet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IDEA%E4%BD%BF%E7%94%A8/" rel="tag">IDEA使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Iterator%E8%BF%AD%E4%BB%A3%E5%99%A8/" rel="tag">Iterator迭代器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaBean/" rel="tag">JavaBean</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B/" rel="tag">Java开发过程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LinkedList/" rel="tag">LinkedList</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math%E7%B1%BB/" rel="tag">Math类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Objects%E7%B1%BB/" rel="tag">Objects类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object%E7%B1%BB-toString-equals/" rel="tag">Object类(toString_equals)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Random%E7%B1%BB/" rel="tag">Random类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scanner%E7%B1%BB/" rel="tag">Scanner类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/StringBuilder%E7%B1%BB/" rel="tag">StringBuilder类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/String%E7%B1%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" rel="tag">String类的常用方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/System%E7%B1%BB/" rel="tag">System类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/abstract%E6%96%B9%E6%B3%95%E4%B8%8Eabstract%E7%B1%BB/" rel="tag">abstract方法与abstract类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/final%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">final关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/instanceof/" rel="tag">instanceof</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static%E5%8F%98%E9%87%8F-static%E6%96%B9%E6%B3%95-static%E4%BB%A3%E7%A0%81%E5%9D%97/" rel="tag">static变量_static方法_static代码块</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/super%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">super关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/this/" rel="tag">this</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/this%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag">this关键字</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%86%85%E5%AD%98%E5%9B%BE/" rel="tag">一维数组内存图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%B4%A2%E5%BC%95/" rel="tag">一维数组定义与索引</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E7%BB%A7%E6%89%BF/" rel="tag">三大特性之继承</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5/" rel="tag">判断语句</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8C%85%E8%A3%85%E7%B1%BB%E4%B8%8E%E8%87%AA%E5%8A%A8%E6%8B%86%E8%A3%85%E7%AE%B1/" rel="tag">包装类与自动拆装箱</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB/" rel="tag">匿名内部类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/" rel="tag">可变参数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" rel="tag">基本类型与字符串之间的转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A2%9E%E5%BC%BAfor/" rel="tag">增强for</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%8A%E4%B8%8B%E8%BD%AC%E5%9E%8B/" rel="tag">多态的上下转型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E5%89%8D%E6%8F%90/" rel="tag">多态的前提</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E8%B1%A1%E5%86%85%E5%AD%98%E5%9B%BE/" rel="tag">对象内存图</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%81%E8%A3%85private/" rel="tag">封装private</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B8%B8%E9%87%8F%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="tag">常量与数据类型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%94%A8%E6%B3%95-class-interface/" rel="tag">引用类型用法(class interface)</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/" rel="tag">循环语句</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB/" rel="tag">成员内部类</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E5%A4%9A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%BB%86%E8%8A%82/" rel="tag">接口多实现方法细节</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E6%88%90%E5%91%98%E7%9A%84%E5%AE%9A%E4%B9%89/" rel="tag">接口成员的定义</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%99%90%E5%88%B6/" rel="tag">接口的限制</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">数据类型转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E4%B8%8E%E8%BF%94%E5%9B%9E%E5%80%BC/" rel="tag">数组作为方法参数与返回值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/" rel="tag">数组常见操作</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/" rel="tag">方法定义</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/" rel="tag">方法重载与执行</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/" rel="tag">权限修饰符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E9%80%A0/" rel="tag">构造</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88-%E9%98%9F%E5%88%97-%E6%95%B0%E7%BB%84-%E9%93%BE%E8%A1%A8-%E7%BA%A2%E9%BB%91%E6%A0%91/" rel="tag">栈_队列_数组_链表_红黑树</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%9B%E5%9E%8B%E7%B1%BB-%E6%96%B9%E6%B3%95-%E6%8E%A5%E5%8F%A3/" rel="tag">泛型类_方法_接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6/" rel="tag">泛型通配符</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" rel="tag">类与对象</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%90%E7%AE%97%E7%AC%A6%E7%BB%86%E8%8A%82/" rel="tag">运算符细节</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" rel="tag">进制转换</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E8%AF%AD%E5%8F%A5/" rel="tag">选择语句</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/ArrayList/" style="font-size: 13px;">ArrayList</a> <a href="/tags/ArrayList%E7%B1%BB/" style="font-size: 13px;">ArrayList类</a> <a href="/tags/Arrays%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95/" style="font-size: 13px;">Arrays类的方法</a> <a href="/tags/Calendar%E7%B1%BB-%E6%96%B9%E4%BE%BF%E8%8E%B7%E5%8F%96%E5%90%84%E4%B8%AA%E6%97%B6%E9%97%B4%E5%B1%9E%E6%80%A7/" style="font-size: 13px;">Calendar类(方便获取各个时间属性)</a> <a href="/tags/Collections%E5%B7%A5%E5%85%B7%E7%B1%BB/" style="font-size: 13px;">Collections工具类</a> <a href="/tags/Collection%E9%9B%86%E5%90%88/" style="font-size: 13px;">Collection集合</a> <a href="/tags/Comparable%E4%B8%8EComparator/" style="font-size: 13px;">Comparable与Comparator</a> <a href="/tags/DateFormat%E7%B1%BB-Date%E4%B8%8EString%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">DateFormat类(Date与String之间的转换)</a> <a href="/tags/Date%E7%B1%BB/" style="font-size: 13px;">Date类</a> <a href="/tags/HashSet/" style="font-size: 13px;">HashSet</a> <a href="/tags/IDEA%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">IDEA使用</a> <a href="/tags/Iterator%E8%BF%AD%E4%BB%A3%E5%99%A8/" style="font-size: 13px;">Iterator迭代器</a> <a href="/tags/JavaBean/" style="font-size: 13px;">JavaBean</a> <a href="/tags/Java%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B/" style="font-size: 13px;">Java开发过程</a> <a href="/tags/LinkedList/" style="font-size: 13px;">LinkedList</a> <a href="/tags/Math%E7%B1%BB/" style="font-size: 13px;">Math类</a> <a href="/tags/Objects%E7%B1%BB/" style="font-size: 13px;">Objects类</a> <a href="/tags/Object%E7%B1%BB-toString-equals/" style="font-size: 13px;">Object类(toString_equals)</a> <a href="/tags/Random%E7%B1%BB/" style="font-size: 13px;">Random类</a> <a href="/tags/Scanner%E7%B1%BB/" style="font-size: 13px;">Scanner类</a> <a href="/tags/StringBuilder%E7%B1%BB/" style="font-size: 13px;">StringBuilder类</a> <a href="/tags/String%E7%B1%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" style="font-size: 13px;">String类的常用方法</a> <a href="/tags/System%E7%B1%BB/" style="font-size: 13px;">System类</a> <a href="/tags/abstract%E6%96%B9%E6%B3%95%E4%B8%8Eabstract%E7%B1%BB/" style="font-size: 13px;">abstract方法与abstract类</a> <a href="/tags/final%E5%85%B3%E9%94%AE%E5%AD%97/" style="font-size: 13px;">final关键字</a> <a href="/tags/instanceof/" style="font-size: 13px;">instanceof</a> <a href="/tags/static%E5%8F%98%E9%87%8F-static%E6%96%B9%E6%B3%95-static%E4%BB%A3%E7%A0%81%E5%9D%97/" style="font-size: 13px;">static变量_static方法_static代码块</a> <a href="/tags/super%E5%85%B3%E9%94%AE%E5%AD%97/" style="font-size: 13px;">super关键字</a> <a href="/tags/this/" style="font-size: 13px;">this</a> <a href="/tags/this%E5%85%B3%E9%94%AE%E5%AD%97/" style="font-size: 13px;">this关键字</a> <a href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%86%85%E5%AD%98%E5%9B%BE/" style="font-size: 13px;">一维数组内存图</a> <a href="/tags/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%B4%A2%E5%BC%95/" style="font-size: 13px;">一维数组定义与索引</a> <a href="/tags/%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E7%BB%A7%E6%89%BF/" style="font-size: 13px;">三大特性之继承</a> <a href="/tags/%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5/" style="font-size: 13px;">判断语句</a> <a href="/tags/%E5%8C%85%E8%A3%85%E7%B1%BB%E4%B8%8E%E8%87%AA%E5%8A%A8%E6%8B%86%E8%A3%85%E7%AE%B1/" style="font-size: 13px;">包装类与自动拆装箱</a> <a href="/tags/%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB/" style="font-size: 13px;">匿名内部类</a> <a href="/tags/%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/" style="font-size: 13px;">可变参数</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">基本类型与字符串之间的转换</a> <a href="/tags/%E5%A2%9E%E5%BC%BAfor/" style="font-size: 13px;">增强for</a> <a href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E4%B8%8A%E4%B8%8B%E8%BD%AC%E5%9E%8B/" style="font-size: 13px;">多态的上下转型</a> <a href="/tags/%E5%A4%9A%E6%80%81%E7%9A%84%E5%89%8D%E6%8F%90/" style="font-size: 13px;">多态的前提</a> <a href="/tags/%E5%AF%B9%E8%B1%A1%E5%86%85%E5%AD%98%E5%9B%BE/" style="font-size: 13px;">对象内存图</a> <a href="/tags/%E5%B0%81%E8%A3%85private/" style="font-size: 13px;">封装private</a> <a href="/tags/%E5%B8%B8%E9%87%8F%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" style="font-size: 13px;">常量与数据类型</a> <a href="/tags/%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%94%A8%E6%B3%95-class-interface/" style="font-size: 13px;">引用类型用法(class interface)</a> <a href="/tags/%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/" style="font-size: 13px;">循环语句</a> <a href="/tags/%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB/" style="font-size: 13px;">成员内部类</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E5%A4%9A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%BB%86%E8%8A%82/" style="font-size: 13px;">接口多实现方法细节</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E6%88%90%E5%91%98%E7%9A%84%E5%AE%9A%E4%B9%89/" style="font-size: 13px;">接口成员的定义</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%99%90%E5%88%B6/" style="font-size: 13px;">接口的限制</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">数据类型转换</a> <a href="/tags/%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E4%B8%8E%E8%BF%94%E5%9B%9E%E5%80%BC/" style="font-size: 13px;">数组作为方法参数与返回值</a> <a href="/tags/%E6%95%B0%E7%BB%84%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/" style="font-size: 13px;">数组常见操作</a> <a href="/tags/%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/" style="font-size: 13px;">方法定义</a> <a href="/tags/%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/" style="font-size: 13px;">方法重载与执行</a> <a href="/tags/%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6/" style="font-size: 13px;">权限修饰符</a> <a href="/tags/%E6%9E%84%E9%80%A0/" style="font-size: 13px;">构造</a> <a href="/tags/%E6%A0%88-%E9%98%9F%E5%88%97-%E6%95%B0%E7%BB%84-%E9%93%BE%E8%A1%A8-%E7%BA%A2%E9%BB%91%E6%A0%91/" style="font-size: 13px;">栈_队列_数组_链表_红黑树</a> <a href="/tags/%E6%B3%9B%E5%9E%8B%E7%B1%BB-%E6%96%B9%E6%B3%95-%E6%8E%A5%E5%8F%A3/" style="font-size: 13px;">泛型类_方法_接口</a> <a href="/tags/%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6/" style="font-size: 13px;">泛型通配符</a> <a href="/tags/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" style="font-size: 13px;">类与对象</a> <a href="/tags/%E8%BF%90%E7%AE%97%E7%AC%A6%E7%BB%86%E8%8A%82/" style="font-size: 13px;">运算符细节</a> <a href="/tags/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" style="font-size: 13px;">进制转换</a> <a href="/tags/%E9%80%89%E6%8B%A9%E8%AF%AD%E5%8F%A5/" style="font-size: 13px;">选择语句</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">13</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E9%9B%86%E5%90%88/">集合</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/05.%E9%9B%86%E5%90%88/%E6%A0%88_%E9%98%9F%E5%88%97_%E6%95%B0%E7%BB%84_%E9%93%BE%E8%A1%A8_%E7%BA%A2%E9%BB%91%E6%A0%91_ArrayList_LinkedList_HashSet_LinkedHashSet_%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0_Collections%E5%B7%A5%E5%85%B7_Comparable_Comparator/" class="title">栈_队列_数组_链表_红黑树_ArrayList_LinkedList_HashSet_LinkedHashSet_可变参数_Collections工具_Comparable_Comparator</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T11:58:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E9%9B%86%E5%90%88/">集合</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/05.%E9%9B%86%E5%90%88/Collection_Iterator(%E5%A2%9E%E5%BC%BAfor)_%E6%B3%9B%E5%9E%8B(%E6%B3%9B%E5%9E%8B%E9%80%9A%E9%85%8D%E7%AC%A6)/" class="title">Collection_Iterator(增强for)_泛型(泛型通配符)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T06:51:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%B8%B8%E7%94%A8API/">常用API</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/03.%E5%B8%B8%E7%94%A8API/Object_Objects_Date_DateFormat_Calendar_System_StringBuilder_%E5%8C%85%E8%A3%85%E7%B1%BB%E4%B8%8E%E6%8B%86%E8%A3%85%E7%AE%B1_%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E4%B8%8EString%E8%BD%AC%E6%8D%A2/" class="title">Object_Objects_Date_DateFormat_Calendar_System_StringBuilder_包装类与拆装箱_基本类型与String转换</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T05:20:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/">继承与多态</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/28/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/final_%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6_%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB_%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB_%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%94%A8%E6%B3%95(class_interface)/" class="title">final_权限修饰符_成员内部类_匿名内部类_引用类型用法(class_interface)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-28T01:40:08.000Z" itemprop="datePublished">2020-08-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/">继承与多态</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/08/27/04.%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81/%E6%8E%A5%E5%8F%A3%E6%88%90%E5%91%98_%E6%8E%A5%E5%8F%A3%E5%A4%9A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E7%BB%86%E8%8A%82_%E5%A4%9A%E6%80%81%E5%89%8D%E6%8F%90%E4%B8%8E%E4%B8%8A%E4%B8%8B%E8%BD%AC%E5%9E%8B_instanceof/" class="title">接口成员_接口多实现方法细节_多态前提与上下转型_instanceof</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-08-27T02:32:08.000Z" itemprop="datePublished">2020-08-27</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">知识点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-IDEA"><span class="toc-text">1. IDEA</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E5%88%9B%E5%BB%BA%E5%8C%85%E5%92%8C%E7%B1%BB"><span class="toc-text">1.1 创建包和类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E5%AD%97%E4%BD%93%E8%AE%BE%E7%BD%AE"><span class="toc-text">1.2 字体设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-IDEA%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95"><span class="toc-text">1.3 IDEA的项目目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-IDEA%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">1.4 IDEA常用快捷键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-IDEA%E4%BF%AE%E6%94%B9%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">1.5 IDEA修改快捷键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-IDEA%E5%AF%BC%E5%85%A5%E5%92%8C%E5%85%B3%E9%97%AD%E9%A1%B9%E7%9B%AE"><span class="toc-text">1.6 IDEA导入和关闭项目</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E6%96%B9%E6%B3%95"><span class="toc-text">2. 方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-text">2.1 定义方法的格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%98%8E%E7%A1%AE"><span class="toc-text">2.2 定义方法的两个明确</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">2.3 定义方法的注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD"><span class="toc-text">2.4 方法重载</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-01.Java基础语法/IDEA_方法重载与执行" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      IDEA使用_方法重载与执行
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/" class="article-date">
+	  <time datetime="2020-08-26T02:50:08.000Z" itemprop="datePublished">2020-08-26</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/IDEA%E4%BD%BF%E7%94%A8/" rel="tag">IDEA使用</a>, <a class="article-tag-link-link" href="/tags/%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/" rel="tag">方法重载与执行</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.4k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 5(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><ul>
+<li>IDEA使用</li>
+<li>定义方法与方法重载</li>
+</ul>
+<h1 id="1-IDEA"><a href="#1-IDEA" class="headerlink" title="1. IDEA"></a>1. IDEA</h1><blockquote>
+<p> 回顾一下开发Java程序的步骤：</p>
+<ol>
+<li>编写代码</li>
+<li>启动cmd</li>
+<li>调用javac编译</li>
+<li>调用java运行</li>
+</ol>
+<p>集成开发环境，是一种专门用来提高Java开发效率的软件。</p>
+<p>​    免费的IDE当中：Eclipse<br>​    收费的IDE当中：IntelliJ IDEA<br>免费+收费所有的IDE当中：全世界用得最多的就是IntelliJ IDEA</p>
+</blockquote>
+<p>IDEA是一个专门针对Java的集成开发工具(IDE)，由Java语言编写。所以，需要有JRE运行环境并配置好环境变量。它可以极大地提升我们的开发效率。可以自动编译，检查错误。  </p>
+<blockquote>
+<p>File-&gt;new-&gt;Project 创建Project选择java，并选择jdk的位置。</p>
+<p>首次新建项目时，默认的Project Location路径有问题，如 c:\\xxx ，正确写法为 c:\xxx 。更改后不会再出现此类问题。  </p>
+</blockquote>
+<h2 id="1-1-创建包和类"><a href="#1-1-创建包和类" class="headerlink" title="1.1 创建包和类"></a>1.1 创建包和类</h2><p>展开创建的工程，在源代码目录 src 上，鼠标右键，选择 new-&gt;package ，键入包名。</p>
+<blockquote>
+<p>所谓包，就是文件夹，用来对类文件进行管理。  </p>
+</blockquote>
+<p>在创建好的包上，鼠标右键，选择 new-&gt;class 创建类，键入类名。  </p>
+<h2 id="1-2-字体设置"><a href="#1-2-字体设置" class="headerlink" title="1.2 字体设置"></a>1.2 字体设置</h2><p>File-&gt;Settings-&gt;Editor-&gt;Font 修改字体  </p>
+<h2 id="1-3-IDEA的项目目录"><a href="#1-3-IDEA的项目目录" class="headerlink" title="1.3 IDEA的项目目录"></a>1.3 IDEA的项目目录</h2><img src="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/02-IDEA的项目结构.png" style="zoom:50%;">
+
+<ul>
+<li>我们创建的项目，在project目录的文件夹下<ul>
+<li>.idea 目录和 demo.iml 和我们开发无关，是IDEA工具自己使用的</li>
+<li>out 目录是存储编译后的.class文件</li>
+<li>src 目录是存储我们编写的.java源文件  </li>
+</ul>
+</li>
+</ul>
+<h2 id="1-4-IDEA常用快捷键"><a href="#1-4-IDEA常用快捷键" class="headerlink" title="1.4 IDEA常用快捷键"></a>1.4 IDEA常用快捷键</h2><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Alt+Enter</td>
+<td>导入包，自动修正代码</td>
+</tr>
+<tr>
+<td>Ctrl+Y</td>
+<td>删除光标所在行</td>
+</tr>
+<tr>
+<td>Ctrl+D</td>
+<td>复制光标所在行的内容，插入光标位置下面</td>
+</tr>
+<tr>
+<td>Ctrl+Alt+L</td>
+<td>格式化代码</td>
+</tr>
+<tr>
+<td>Ctrl+/</td>
+<td>单行注释</td>
+</tr>
+<tr>
+<td>Ctrl+Shift+/</td>
+<td>选中代码注释，多行注释，再按取消注释</td>
+</tr>
+<tr>
+<td>Alt+i</td>
+<td>自动生成代码，toString，get，set等方法</td>
+</tr>
+<tr>
+<td>Alt+Shift+上下箭头</td>
+<td>移动当前代码行</td>
+</tr>
+</tbody></table>
+<h2 id="1-5-IDEA修改快捷键"><a href="#1-5-IDEA修改快捷键" class="headerlink" title="1.5 IDEA修改快捷键"></a>1.5 IDEA修改快捷键</h2><p>​        在IDEA工具中， Ctrl+空格 的快捷键，可以帮助我们补全代码，但是这个快捷键和Windows中的输入法切换快捷键冲突，需要修改IDEA中的快捷键。<br>1.<code>File-&gt;Settings-&gt;keymap-&gt;Main menu-&gt;code-&gt;Completion-&gt;Basic  </code></p>
+<p>2.双击 <code>Basic-&gt;选择remove Ctrl+空格 </code> </p>
+<p>3.再次双击 <code>Basic-&gt;Add Keyboard-&gt;键入 Alt+/-&gt;点击OK</code></p>
+<h2 id="1-6-IDEA导入和关闭项目"><a href="#1-6-IDEA导入和关闭项目" class="headerlink" title="1.6 IDEA导入和关闭项目"></a>1.6 IDEA导入和关闭项目</h2><p>​        关闭IDEA中已经存在的项目， <code>File-&gt;Close Project  </code></p>
+<blockquote>
+<p>File-&gt;Close Project 这时IDEA回到了刚启动界面，点击项目上的 X ，IDEA中就没有这个项目了  </p>
+<p>若要打开，在IDEA的启动界面上，点击 OPEN ，选择项目目录即可  </p>
+</blockquote>
+<h1 id="2-方法"><a href="#2-方法" class="headerlink" title="2. 方法"></a>2. 方法</h1><h2 id="2-1-定义方法的格式"><a href="#2-1-定义方法的格式" class="headerlink" title="2.1 定义方法的格式"></a>2.1 定义方法的格式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">修饰符 返回值类型 方法名(参数列表)&#123;</span><br><span class="line">    <span class="comment">//代码省略...</span></span><br><span class="line">    <span class="keyword">return</span> 结果;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修饰符： public static 固定写法<ul>
+<li>返回值类型： 表示方法运行的结果的数据类型，方法执行后将结果返回到调用者</li>
+<li>参数列表：方法在运算过程中的未知数据，调用者调用方法时传递</li>
+<li>return：将方法执行后的结果带给调用者，方法执行到 return ，整体方法运行结束</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>return 结果; 正确的叫法为方法的返回值  </p>
+</blockquote>
+<h2 id="2-2-定义方法的两个明确"><a href="#2-2-定义方法的两个明确" class="headerlink" title="2.2 定义方法的两个明确"></a>2.2 定义方法的两个明确</h2><ul>
+<li>需求：定义方法实现两个整数的求和计算。<ul>
+<li><strong>明确返回值类型</strong>：方法计算的是整数的求和，结果也必然是个整数，返回值类型定义为int类型。</li>
+<li><strong>明确参数列表</strong>：计算哪两个整数的和，并不清楚，但可以确定是整数，参数列表可以定义两个int类型的<br>变量，由调用者调用方法时传递  </li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method_Demo2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 调用方法getSum，传递两个整数，这里传递的实际数据又称为实际参数</span></span><br><span class="line">            <span class="comment">// 并接收方法计算后的结果，返回值</span></span><br><span class="line">            <span class="keyword">int</span> sum = getSum(<span class="number">5</span>, <span class="number">6</span>);</span><br><span class="line">            System.out.println(sum);</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* 定义</span></span><br><span class="line"><span class="comment">        计算两个整数和的方法</span></span><br><span class="line"><span class="comment">        返回值类型，计算结果是int</span></span><br><span class="line"><span class="comment">        参数：不确定数据求和，定义int参数.参数又称为形式参数</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>程序执行，主方法 main 调用 getSum 方法，传递了实际数据 5和6 ，两个变量 a和b 接收到的就是实际参数，并将计算后的结果返回，主方法 main 中的变量 sum 接收的就是方法的返回值。  </p>
+</blockquote>
+<img src="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/image-20200826103253441.png" alt="image-20200826103253441" style="zoom:50%;">
+
+<p><img src="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/03-%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B%E5%9B%BE%E8%A7%A3.png"></p>
+<h2 id="2-3-定义方法的注意事项"><a href="#2-3-定义方法的注意事项" class="headerlink" title="2.3 定义方法的注意事项"></a>2.3 定义方法的注意事项</h2><blockquote>
+<p>定义位置，类中方法外面。<br>返回值类型，必须要和 return 语句返回的类型相同，否则编译失败 。  </p>
+<p>不能在 return 后面写代码， return 意味着方法结束，所有后面的代码永远不会执行，属于无效代码。</p>
+<p>不能用输出语句调用 void 类型的方法。因为方法执行后没有结果，也就打印不出任何内容。    </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回值类型要求是int</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getSum</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">5</span>;<span class="comment">// 正确，int类型</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.2</span>;<span class="comment">// 错误，类型不匹配</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;<span class="comment">// 错误，类型不匹配</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/04-方法返回值的有无.png" style="zoom: 67%;">
+
+<h2 id="2-4-方法重载"><a href="#2-4-方法重载" class="headerlink" title="2.4 方法重载"></a>2.4 方法重载</h2><ul>
+<li><strong>方法重载</strong>：指在同一个类中，允许存在一个以上的同名方法，只要它们的参数列表不同即可，与修饰符和返回值类型无关。<ul>
+<li>参数列表：<strong>个数不同，数据类型不同，顺序不同</strong>。</li>
+<li>重载方法调用：JVM通过方法的参数列表，调用不同的方法。  </li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/" title="IDEA使用_方法重载与执行" target="_blank" rel="external">https://mrchen229.github.io/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/IDEA_%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://mrchen229.github.io/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://mrchen229.github.io/" target="_blank"><span class="text-dark">pigDong</span><small class="ml-1x">Java &amp; CV</small></a></h3>
+        <div>Java &amp; CV 初学者。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AE%9A%E4%B9%89_%E5%86%85%E5%AD%98%E5%9B%BE_%E4%BD%9C%E4%B8%BA%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E4%B8%8E%E8%BF%94%E5%9B%9E%E5%80%BC/" title="一维数组定义_内存图_作为方法参数与返回值"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/08/26/01.Java%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%88%A4%E6%96%AD_%E9%80%89%E6%8B%A9_%E5%BE%AA%E7%8E%AF/" title="判断_选择_循环"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://mrchen229.github.io/" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	From <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/ygbhf/clicklove/clicklove.js"></script>
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
